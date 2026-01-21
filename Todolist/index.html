@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>todo list</title>
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            background-color: black;
+            flex-wrap: wrap;
+            gap: 10px;
+            
+        }
+
+        .container{
+            padding: 20px;
+            border: 2px solid chartreuse;
+            
+        }
+
+        .container2{
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        #input{
+            padding: 10px;
+            margin-top: 20px;
+
+        }
+
+        #btn{
+            padding: 10px;
+            color: black;
+            background-color: chartreuse;
+            border: none;
+            cursor: pointer;
+        }
+
+         #clear{
+            padding: 10px;
+            color: black;
+            background-color: chartreuse;
+            border: none;
+            cursor: pointer;
+        }
+
+        #addedtask{
+           color: chartreuse;
+           font-size: 20px;
+           list-style-type:decimal;
+           
+        }
+    </style>
+</head>
+<body>
+   <div class="container">
+    <input type="text" placeholder="Enter task" id="input">
+    
+    <button onclick="add()" id="btn">Add task</button>
+    <button onclick="clearList()" id="clear">clear</button>
+   </div> 
+
+   <div class="container2">
+    <ul id="tasklist">
+
+    </ul>
+   </div>
+</body>
+<script>
+    const input = document.getElementById("input");
+    const btn = document.getElementById("btn");
+    const clearbtn = document.getElementById("clear");
+    const tasklist = document.getElementById("tasklist");
+    const addedtask = document.getElementById("addedtask");
+
+
+
+    function add(){
+        let task = input.value.trim();
+        if(task === ""){
+            alert("please enter  task");
+            return;
+        }
+      
+
+
+        const li = document.createElement("li");
+        li.style.color = "chartreuse";
+        li.style.fontSize = "20px";
+        li.textContent = task;
+        tasklist.appendChild(li);
+        input.value = "";
+
+
+
+
+
+
+    }
+
+
+    function clearList(){
+       tasklist.innerHTML = "";
+    }
+
+
+
+ 
+</script>
+</html>
