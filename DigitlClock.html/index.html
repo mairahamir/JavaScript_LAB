@@ -34,9 +34,7 @@
 <script>
  
 
- const clock = document.getElementById("clock");
-
-    function updateTime(){
+function updateTime(){
     const now = new Date();
 
     let hours = now.getHours();
@@ -45,26 +43,26 @@
 
     if(hours < 10){
         hours = "0" + hours;
-    }else{
-        hours = hours;
     }
     if(minutes < 10){
        minutes = "0" + minutes;
-    }else{
-        minutes = minutes;
     }
     if(seconds < 10){
         seconds = "0" + seconds;
-    }else{
-        seconds = seconds;
+    }
+         
+    let newtimer = hours +" : "+ minutes + " : " + seconds;
+
+    // Then handle AM/PM
+    if (hours > 12) {
+        hours = hours - 12;
+        newtimer = hours +" : "+ minutes + " : " + seconds + " PM";
+    } else {
+        newtimer = newtimer + " AM";
     }
 
-    const newtimer = hours +" : "+ minutes + " : " + seconds;
     clock.textContent = newtimer;
-    }
-
-    setInterval(updateTime,1000);
-    updateTime();
-
+}
+setInterval(updateTime,1000);
 </script>
 </html>
