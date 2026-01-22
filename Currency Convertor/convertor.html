@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Convertor</title>
+    <style>
+        body{
+            display: flex;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: black;
+        }
+
+        .container{
+            border: 2px solid black;
+            padding: 30px 40px;
+            border-radius: 20px;
+            background-color: black;
+           box-shadow: 0 0 15px rgba(170, 57, 76, 0.6), 0 0 30px rgba(170, 57, 76, 0.4), 0 0 50px rgba(170, 57, 76, 0.2);
+        }
+
+        #input{
+            height: 30px;
+            width: 200px;
+            border-radius: 5px;
+            background-color: transparent;
+            border: 1px solid #aa394c;
+            color: white;
+        }
+
+        #input:focus{
+            outline:none;
+             border: 1px solid #aa394c;
+        }
+
+        #currency-select{
+            height: 30px;
+            width: 100px;
+            color: #aa394c;
+            border-radius: 5px;
+            
+        }
+
+        #btn{
+            height: 30px;
+            width: 120px;
+            background-color: #aa394c;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+            padding: 5px;
+        }
+        p{
+            color: #aa394c;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <p>Currency Convertor</p>
+        <p>PKR To Foreign Currency</p>
+        <input type="text" placeholder="enter you number" id="input">
+        <br><br>
+        <select name="currency" id="currency-select">
+            <option value="Usd">USD</option>
+            <option value="Dirham">DIRHAM</option>
+            <option value="Inr">INR</option>
+            <option value="Yuan">YUAN</option>
+        </select>
+
+        <button id="btn">Calculate</button>
+        <p id="result"></p>
+    </div>
+</body>
+<script>
+
+let input = document.getElementById("input");
+let btn = document.getElementById("btn");
+let result = document.getElementById("result");
+
+ 
+btn.addEventListener("click" ,function(){
+
+let screen = parseInt(input.value);
+if(isNaN(screen)){
+    alert("please enter a valid number");
+}
+
+let currency_select = document.getElementById("currency-select");
+
+let currency = currency_select.value;
+
+if(currency == "Usd"){
+screen = screen/282;
+screen = screen + " "+"USD";
+}else if(currency == "Dirham"){
+screen = screen/75;
+screen = screen + " "+"DIRHAM";
+}else if(currency == "Inr"){
+screen = screen/3.5;
+screen = screen + " "+"INR";
+}else if(currency == "Yuan"){
+screen = screen/40;
+screen = screen +" "+"YUAN";
+}
+
+result.textContent = screen;
+});
+
+
+</script>
+</html>
