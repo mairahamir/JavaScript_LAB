@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toggle Button </title>
+    <style>
+        body{
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+
+        }
+        body.light{
+            background-color: white;
+            color: rgb(17, 17, 56);
+            transition: all 0.5s ease;
+        }
+
+        body.dark{
+            background-color: rgb(17, 17, 56);
+            color: white;
+            transition: all 0.5s ease;
+        }
+
+        #btn{
+            height: 40px;
+            width: 100px;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+
+    </style>
+</head>
+
+<body class="light">
+
+
+    <div class="container">
+        <h1>This is an Toggle Button Example</h1>
+        <p>Click On The Button Below And See The magic</p>
+
+        <button id="btn">switch Me</button>
+    </div>
+
+   
+
+<script>
+    let btn = document.getElementById("btn");
+  
+  btn.addEventListener("click" , ()=>{
+   document.body.classList.toggle("dark");
+   btn.style.backgroundColor = "white";
+   btn.style.border = "1px solid  rgb(17, 17, 56)";
+   btn.style.color = "rgb(17, 17, 56)";
+
+   document.body.classList.toggle("light");
+    btn.style.backgroundColor = "rgb(17, 17, 56)";
+   btn.style.border = "1px solid white";
+    btn.style.color = "white";
+
+
+   if(document.body.classList.contains("dark")){
+    btn.innerText ="light mode"
+   }else{
+    btn.innerText ="dark mode"
+   }
+  });
+</script>
+</html>
