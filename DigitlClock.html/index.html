@@ -57,8 +57,10 @@ function updateTime(){
     if (hours > 12) {
         hours = hours - 12;
         newtimer = hours +" : "+ minutes + " : " + seconds + " PM";
+
     } else {
         newtimer = newtimer + " AM";
+        
     }
 
     clock.textContent = newtimer;
