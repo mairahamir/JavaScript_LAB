@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prayer Timming Reminder</title>
+    <style>
+
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-wrap: wrap;
+            background: linear-gradient(135deg, #120649, #382b6d);
+            color: white;
+            flex-direction: column;
+        }
+        #prayer_timmings{
+           
+           display: flex;
+           gap: 25px;
+           justify-content: center;
+           align-items: center;
+           font-size: 18px;
+           font-family: Arial, Helvetica, sans-serif;
+           margin-left: 15px;
+           flex-wrap: wrap;
+        }
+
+    
+         #moon {
+        font-size: 80px;
+        margin-bottom: 100px;
+        text-shadow: 0 0 20px #fff, 0 0 40px #aad4ff, 0 0 60px #aad4ff, 0 0 80px #15616D;
+        animation: glow 2s infinite ;
+    
+    }
+
+     @keyframes glow {
+        0% { text-shadow: 0 0 5px #fff, 0 0 10px #aad4ff, 0 0 25px #aad4ff, 0 0 40px #15616D; }
+        100% { text-shadow: 0 0 25px #fff, 0 0 50px #aad4ff, 0 0 75px #aad4ff, 0 0 100px #15616D; }
+    }
+     
+    </style>
+</head>
+<body>
+   
+    <div id="moon">🌙</div>
+
+    <div id="prayer_timmings">Loading.....</div>
+</body>
+<script>
+    fetch("https://api.aladhan.com/v1/timingsByCity?city=Karachi&country=Pakistan&method=2")
+    .then(function(response){
+        return response.json();
+    })
+    .then(function(data){
+        let time = data.data.timings;
+        //data.timings are keys.
+
+        let html = '';
+       
+        html = html + "<div>" + "Fajr" + " | " + time.Fajr + "</div>";
+        html = html + "<div>" + "Sunrise"+ " | " +time.Sunrise.slice(0,5) +"</div>";
+        html = html + "<div>" + "Dhuhr" + " | " + time.Dhuhr + "</div>";
+        html = html + "<div>" + "Asr" + " | " + time.Asr + "</div>";
+        html = html + "<div>" + "Maghrib" + " | " + time.Maghrib.slice(0,5)  + "</div>";
+        html = html + "<div>" + "Isha" + " | " + time.Isha.slice(0,5)  + "</div>";
+        html = html + "<div>" + "Midnight" + " | " + time.Midnight.slice(0,5) +"</div>";
+        html = html + "<div>" + "Firstthird" + " | " + time.Firstthird + "</div>";
+        html = html + "<div>" + "Lastthird" + " | " + time.Lastthird + "</div>";
+
+
+        document.getElementById("prayer_timmings").innerHTML =html;
+
+    })
+</script>
+</html>

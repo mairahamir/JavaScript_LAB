@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Speed Detector</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: rgb(150, 113, 218);
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+            flex-wrap: wrap;
+        }
+
+        h1 {
+            font-size: 40px;
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .container{
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            flex-direction: column;
+        }
+
+        p {
+            font-size: 20px;
+            color: white;
+            text-align: center;       /* keeps text centered */
+            line-height: 1.8;         /* adds space between lines */
+            max-width: 700px;         /* limits paragraph width */
+             margin: 0 auto;          
+            letter-spacing: 0.25px;
+            word-spacing: 2px;
+            border: 6px solid white;
+            padding: 10px;
+        }
+
+        #input{
+            height: 40px;
+            width: 500px;
+            text-align: center;
+            border: none;
+        }
+
+
+        button{
+            text-align: center;
+            padding: 10px;
+           color: white;
+           background-color:rgb(150, 113, 218);;
+           border: none;
+           border-radius: 6px;
+           width: 100px;
+           cursor: pointer;
+           border: 4px solid white;
+            
+        }
+
+        #results{
+            color: white;
+            text-transform: capitalize;
+            font-weight: bold;
+        }
+
+
+        @media screen and (max-width:600px) {
+            #input{
+                width: 90%;
+                max-width: 400px;
+            }
+
+            p{
+                font-size: 15px;
+            }
+            h1{
+                font-size: 30px;
+            }
+        }
+
+
+        
+        @media screen and (max-width:350px) {
+            #input{
+                width: 70%;
+                max-width: 300px;
+            }
+
+            p{
+                font-size: 10px;
+            }
+            h1{
+                font-size: 20px;
+            }
+        }
+
+
+    </style>
+</head>
+<body>
+    <p id="timer">00:00&nbsp;</p>
+    <h1>Typing Speed Detector (1 Minute)</h1>
+    <div class="container">
+        <p id="para">
+            <strong>
+                Typing speed is an important skill in today’s digital world. 
+                It helps individuals communicate ideas quickly, complete tasks 
+                efficiently, and improve overall productivity. Regular typing 
+                practice not only increases speed but also enhances accuracy and 
+                confidence. By focusing on proper finger placement and maintaining 
+                a steady rhythm, anyone can gradually become a faster and more reliable 
+                typist.
+            </strong>
+        </p>
+
+        <br><br>
+        <textarea name="input" id="input" placeholder="start typing"></textarea>
+        <br><br>
+        <button id="reset">Reset</button>
+        <div class="results" id="results"></div>
+    </div>
+</body>
+<script>
+    const results = document.getElementById("results");
+
+    const paragraph = document.getElementById("para");
+
+    const reset = document.getElementById("reset");
+
+    const textarea = document.getElementsByTagName("textarea")[0];
+
+    const timer = document.getElementById("timer");
+
+
+    const para = paragraph.innerText;
+
+    let timeStarted = false;
+    let time = 60;
+    let interval;
+
+
+
+    function startTimer(){
+        interval = setInterval(() => {
+               
+            time--;
+            timer.innerHTML = time + "sec";
+            if(time <= 0){
+                clearInterval(interval)
+                textarea.disabled = true;
+                calculateresult();
+            }
+        }, 1000);
+    }
+
+
+   // calcuate wpm and accuracy
+
+   function calculateresult(){
+    const typedText = textarea.value;
+    let correctChars = 0;
+
+    for(let i = 0; i < typedText.length ; i++){
+       if(typedText[i]===para[i]) correctChars++;
+    }
+
+
+    let totalcharc = typedText.length;
+    let accuracy = 0;
+    if(totalcharc > 0){
+        accuracy = Math.round(correctChars/totalcharc *100);
+    }
+//5 letters = 1 word
+//divide total charcaters with 5 
+//result = eg . 10/5 => 2 words
+let wpm = Math.round(totalcharc/5);
+
+results.innerHTML = "Accuracy" + accuracy +"%"+"  |  "+ "WPM" + wpm + "  |  " + "Characters Typed" + totalcharc;
+}
+
+   //start timer on first key stroke
+   textarea.addEventListener('input',()=>{
+    
+    if(!timeStarted){
+        timeStarted = true;
+        startTimer();
+    }
+   });
+
+
+reset.addEventListener("click", () => {
+    clearInterval(interval);
+    textarea.disabled = false;
+    textarea.value = "";
+    results.innerHTML = "";
+    timerStarted = false;
+    time = 60;
+});
+
+
+
+
+</script>
+</html>
