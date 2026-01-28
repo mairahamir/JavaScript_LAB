@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-commerce mini store</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 20px;
+            color: #333;
+        }
+
+        h2, h3 {
+            text-align: center;
+            color: #15616D;
+        }
+
+        #products, #cart {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .product, .cart-item {
+            background-color: #fff;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 200px;
+        }
+
+        .product p, .cart-item p {
+            margin: 0;
+            font-weight: bold;
+            flex: 1;
+        }
+
+        .btn {
+            background-color: #15616D;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #001524;
+        }
+
+        .cart-item button {
+            padding: 4px 8px;
+            font-weight: bold;
+        }
+
+        #total {
+            color: #15616D;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            .product, .cart-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .product p, .cart-item p {
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h2>Products</h2>
+    <div id="products"></div>
+
+    <h2>Cart</h2>
+    <div id="cart"></div>
+
+    <h3>Total Bill : Rs <span id="total">0</span></h3>
+
+<script>
+var products = [
+    {id:1,name:"laptop",price:50000},
+    {id:2,name:"speaker",price:1000},
+    {id:3,name:"mouse",price:300},
+    {id:4,name:"keyboard",price:1500},
+    {id:5,name:"usb",price:700},
+    {id:6,name:"charger",price:300},
+    {id:7,name:"mobile",price:100000},
+    {id:8,name:"airpods",price:5000},
+    {id:9,name:"cpu",price:50000},
+];
+
+var cart = [];
+
+function showproducts() {
+    var productlist = document.getElementById("products");  
+    productlist.innerHTML = "";
+
+    products.forEach(function(product) {
+        productlist.innerHTML +=
+        `<div class="product">
+            <p>${product.name} -- Rs: ${product.price}</p>
+            <button onclick="addtocart(${product.id})" class="btn">Add To Cart</button>
+        </div>`;
+    });
+}
+
+function addtocart(id) {
+    var item = cart.find(p => p.product.id === id);
+
+    if(item){
+        item.quantity++;
+    }else{
+        var product = products.find(p => p.id === id);
+        cart.push({product: product, quantity:1});
+    }
+    showcart();
+}
+
+function increase(id) {
+    var item = cart.find(p => p.product.id === id);
+    item.quantity++;
+    showcart();
+}
+
+function decrease(id) {
+    var item = cart.find(p => p.product.id === id);
+    item.quantity--;
+    if(item.quantity === 0){
+        cart = cart.filter(p => p.product.id != id);
+    }
+    showcart();
+}
+
+function showcart(){
+    var cartdiv = document.getElementById("cart");
+    var total = 0;
+    cartdiv.innerHTML = "";
+
+    cart.forEach(function(item){
+        total += item.product.price * item.quantity;
+        cartdiv.innerHTML += `
+        <div class="cart-item">
+            <p>${item.product.name} - Rs ${item.product.price}</p>
+            <button onclick="increase(${item.product.id})">+</button>
+            ${item.quantity}
+            <button onclick="decrease(${item.product.id})">-</button>
+        </div>`;
+    });
+
+    document.getElementById("total").innerText = total;
+}
+
+showproducts();
+showcart();
+</script>
+</body>
+</html>
